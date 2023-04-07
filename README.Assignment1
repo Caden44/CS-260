@@ -1,0 +1,21 @@
+Create a list that represents all of the marbles
+
+Create a second list to represent the empty bag
+
+Prompt the user to input the name of a marble they want to add to the bag, or if they wish to stop adding marbles
+
+If the user inputted a marble's name, then it will take the specified marble from the first list, and put it into the bag
+
+If the user inputted "random", an unknown marble will be added to the bag list
+
+If the user inputted "done" the loop for adding marbles will be exitted
+
+A new prompt will ask the user if they wish to remove any marbles
+
+If they input a marble name, it will be taken out of the bag
+
+If they input "random" a unknown marble will be removed
+
+If they input "done" the loop will exit
+
+The list if marbles in the bag will print
