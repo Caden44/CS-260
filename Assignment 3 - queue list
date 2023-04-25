@@ -1,0 +1,42 @@
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+void showq(queue<int> num)
+{
+    cout << "\nThe current size of the queue is : " << num.size();
+	cout << "\nThe front value is : " << num.front();
+	cout << "\nThe last value is : " << num.back();
+	
+	queue<int> n = num;
+	cout << "\nThe queue is : ";
+	while (!n.empty()) {
+		cout << '\t' << n.front();
+		n.pop();
+	}
+	cout << "\n";
+}
+
+int main()
+{
+    queue<int> numbers;
+	numbers.push(1);
+	numbers.push(2);
+	numbers.push(3);
+	numbers.push(4);
+	
+	showq(numbers);
+
+	cout << "\nWe're going to add the value '5' to the back of the queue";
+	numbers.push(5);
+	showq(numbers);
+	
+    cout << "\nNow let's remove the front value from the queue";
+	numbers.pop();
+    showq(numbers);
+    
+    cout << "\nFinally, let's show the front value without altering the queue";
+    cout << '\t' << numbers.front();
+	return 0;
+}
