@@ -1,0 +1,39 @@
+2.0.0 In order to make a queue data structure, you will most likely need the following functions
+
+2.1.1 An initializer for the queue, with a name
+
+2.1.2 The .push function to add items into the queue
+
+You can also add optional functions to print the queue at different stages.
+To do so, you can use a function like this:
+
+ 2.1.3 cout << "The queue is : ";
+    printq(queueName);
+    
+    
+2.2 You'll need to know the number of items you want in the list before the program will work. Then you'll need to know what position you want them in
+
+    
+3.0.0 To make a list structure where you can add or remove an element at any positiion in the list, you might use the following functions
+
+3.1.1 An initializer to create the list, with as many elemtents as you'd like: list<int> list1={1,2,3,4,5};
+
+3.1.2 Initializer for iterators:  list<int>::iterator item3 = list1.begin();
+
+3.1.3 Give the iterator a location: advance(it1,3);
+
+3.1.4 Erasing the item at iterator location: list1.erase(item3);
+
+3.1.5 To add an item, use: insert(iterator position, item to add)
+
+3.1.6 Optional printing of the list: 
+cout << "The list : ";
+    for (list<int>::iterator i=list1.begin(); i!=list1.end(); i++)
+       cout << *i << " ";
+       
+    cout << endl;
+    
+ 
+ 3.2.1 Things you need to know for this to work are the number of items on your list, where you wan to insert or erase items,
+ and how many items you'll add or erase. You'll also need the values you're going to insert or erase
+ 
