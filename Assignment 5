@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool comparator(string a, string b)
+{
+    return a < b;
+}
+
+int main()
+{
+    int num = 10;
+    string items[] = {"Train", "Potato", "Green", "X-ray", "Mud", "Hotel", "Veil", "Sleet", "Salt", "Alpha"};
+    sort(items, items + num, comparator);
+       for(int i = 0; i < num; i++)
+    {
+        cout << "\n" << i + 1 << ": ";
+        cout << items[i] << " ";
+    }
+    cout << "\nThe list is now sorted alphabetically";
+    cout << "\nInsert big-O complexity: O(1)";
+    cout << "\nSearch big-O complexity: O(10)";
+    cout << "\nThis means the linear big-O complexity is O(10)";
+    return 0;
+}
