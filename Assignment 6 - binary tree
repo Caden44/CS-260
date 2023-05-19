@@ -1,0 +1,110 @@
+#include <iostream>
+using namespace std;
+
+struct node 
+{
+  int focus;
+  struct node *left, *right;
+};
+
+struct node *SmallSuccessor(struct node *node)
+{
+  struct node *target = node;
+
+  while (target && target -> left != NULL)
+  {
+    target = target -> left;
+  }
+  return target;
+}
+
+struct node *Node(int item) 
+{
+  struct node *temp = (struct node *)malloc(sizeof(struct node));
+  temp -> focus = item;
+  temp -> left = temp -> right = NULL;
+  return temp;
+}
+
+struct node *insert(struct node *node, int focus) 
+{
+  if (node == NULL) return Node(focus);
+
+  if (focus < node -> focus)
+  {
+    node -> left = insert(node -> left, focus);
+  }
+  else
+  {
+    node -> right = insert(node -> right, focus);
+  }
+  return node;
+}
+
+struct node *Delete(struct node *root, int focus) 
+{
+  if (root == NULL) return root;
+
+  if (focus < root -> focus)
+  {
+    root -> left = Delete(root -> left, focus);
+  }
+  else if (focus > root -> focus)
+  {
+    root -> right = Delete(root -> right, focus);
+  }
+  else {
+
+    if (root -> left == NULL) 
+    {
+      struct node *temp = root -> right;
+      free(root);
+      return temp;
+    } 
+    else if (root -> right == NULL) 
+    {
+      struct node *temp = root->left;
+      free(root);
+      return temp;
+    }
+
+    struct node *temp = SmallSuccessor(root -> right);
+    root -> focus = temp -> focus;
+    root -> right = Delete(root -> right, temp -> focus);
+  }
+  return root;
+}
+
+void sort(struct node *root) 
+{
+  if (root != NULL) 
+  {
+    sort(root -> left);
+    cout << root -> focus << ", ";
+    sort(root -> right);
+  }
+}
+
+int main() 
+{
+  struct node *root = NULL;
+  
+  root = insert(root, 9);
+  root = insert(root, 3);
+  root = insert(root, 2);
+  root = insert(root, 4);
+  root = insert(root, 1);
+  root = insert(root, 7);
+  root = insert(root, 10);
+  root = insert(root, 6);
+  root = insert(root, 5);
+  root = insert(root, 8);
+  
+  cout << "Sorted list: ";
+  sort(root);
+  root = Delete(root, 4);
+  cout << "\nThe list after deleting 4";
+  cout << "\nSorted list: ";
+  sort(root);
+  return 0;
+}
