@@ -7,19 +7,14 @@ struct node
   struct node *left, *right;
 };
 
-struct node *SmallSuccessor(struct node *node)
-{
-  struct node *target = node;
-
-  while (target && target -> left != NULL)
-  {
-    target = target -> left;
-  }
-  return target;
-}
+int NodeCounter = 0;
+int InsertCounter = 0;
+int DeleteCounter = 0;
+int SortCounter = 0;
 
 struct node *Node(int item) 
 {
+  NodeCounter ++;
   struct node *temp = (struct node *)malloc(sizeof(struct node));
   temp -> focus = item;
   temp -> left = temp -> right = NULL;
@@ -28,6 +23,7 @@ struct node *Node(int item)
 
 struct node *insert(struct node *node, int focus) 
 {
+  InsertCounter ++;
   if (node == NULL) return Node(focus);
 
   if (focus < node -> focus)
@@ -43,6 +39,7 @@ struct node *insert(struct node *node, int focus)
 
 struct node *Delete(struct node *root, int focus) 
 {
+  DeleteCounter ++;
   if (root == NULL) return root;
 
   if (focus < root -> focus)
@@ -67,16 +64,13 @@ struct node *Delete(struct node *root, int focus)
       free(root);
       return temp;
     }
-
-    struct node *temp = SmallSuccessor(root -> right);
-    root -> focus = temp -> focus;
-    root -> right = Delete(root -> right, temp -> focus);
   }
   return root;
 }
 
 void sort(struct node *root) 
 {
+  SortCounter ++;
   if (root != NULL) 
   {
     sort(root -> left);
@@ -106,5 +100,9 @@ int main()
   cout << "\nThe list after deleting 4";
   cout << "\nSorted list: ";
   sort(root);
+  cout << "\nNode() executed " << NodeCounter << " times";
+  cout << "\nInsert() executed " << InsertCounter << " times";
+  cout << "\nDelete() executed " << DeleteCounter << " times";
+  cout << "\nSort() executed " << SortCounter << " times";
   return 0;
 }
