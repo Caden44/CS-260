@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string RandomStreet(int n)
+{
+    string streets[19] = { "adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
+                          "Henry", "Jefferson", "Lebanon", "Mitchell", "North", 
+                          "Oregon", "Park", "Rough", "Street", "Times",
+                          "Walnut", "Youth"};
+  
+    string street = "";
+    for (int i = 0; i < n; i++) 
+        street = street + streets[rand() % 19];
+    cout << "\n";
+    streets.erase(2);
+    return street;
+}
+  
+int main()
+{
+   srand(time(NULL));
+   int n = 1;
+   cout << RandomStreet(n);
+   cout << RandomStreet(n);
+}
