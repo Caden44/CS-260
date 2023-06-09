@@ -12,7 +12,7 @@ string RandomStreet(int n)
     for (int i = 0; i < n; i++) 
         street = street + streets[rand() % 19];
     cout << "\n";
-    streets.erase(2);
+    streets.erase();
     return street;
 }
   
