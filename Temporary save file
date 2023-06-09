@@ -1,0 +1,59 @@
+// A simple representation of graph using STL
+#include <bits/stdc++.h>
+#include <cstdlib>
+using namespace std;
+
+class Graph{
+    public:
+    // A utility function to add an edge in an
+    // undirected graph.
+    void addEdge(vector<int> adj[], int u, int v)
+    {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+        cout << "\nu - " << u << "\nv - " << v;
+    }
+ 
+// A utility function to print the adjacency list
+// representation of graph
+    void printGraph(vector<int> adj[], int V)
+    {
+        //int street;
+        int n = 1;
+        //int unknown = rand()
+        for (int v = 0; v < V; v++) {
+            //RandomStreet(n);
+            string streets[19] = { "adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
+                            "Henry", "Jefferson", "Lebanon", "Mitchell", "North", 
+                            "Oregon", "Park", "Rough", "Street", "Times",
+                            "Walnut", "Yam"};
+  
+            string street = "";
+            for (int i = 0; i < n; i++) 
+                street = street + streets[rand() % 18];
+                cout << "\n Streets adjacent to " << street << "(" << v << ")"
+                    << "\n head";
+            for (auto x : adj[v])
+                cout << " -> " << streets[x] << "(" << x << ")";
+            cout << endl;
+        }
+    }
+};
+ 
+// Driver code
+int main()
+{
+    Graph obj;
+    
+    int V = 5;
+    vector<int> adj[V];
+    obj.addEdge(adj, 0, 1);
+    obj.addEdge(adj, 0, 4);
+    obj.addEdge(adj, 1, 2);
+    obj.addEdge(adj, 1, 3);
+    obj.addEdge(adj, 1, 4);
+    obj.addEdge(adj, 2, 3);
+    obj.addEdge(adj, 3, 4);
+    obj.printGraph(adj, V);
+    return 0;
+}
