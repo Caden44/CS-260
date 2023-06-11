@@ -11,7 +11,7 @@ class Graph{
     {
         adj[u].push_back(v);
         adj[v].push_back(u);
-        cout << "\nu - " << u << "\nv - " << v;
+        //cout << "\nu - " << u << "\nv - " << v;
     }
  
 // A utility function to print the adjacency list
@@ -20,22 +20,24 @@ class Graph{
     {
         //int street;
         int n = 1;
+        int y = 0;
         //int unknown = rand()
         for (int v = 0; v < V; v++) {
             //RandomStreet(n);
-            string streets[19] = { "adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
+            string streets[19] = {"adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
                             "Henry", "Jefferson", "Lebanon", "Mitchell", "North", 
                             "Oregon", "Park", "Rough", "Street", "Times",
                             "Walnut", "Yam"};
   
             string street = "";
             for (int i = 0; i < n; i++) 
-                street = street + streets[rand() % 18];
+                street = street + streets[y];
                 cout << "\n Streets adjacent to " << street << "(" << v << ")"
                     << "\n head";
             for (auto x : adj[v])
                 cout << " -> " << streets[x] << "(" << x << ")";
             cout << endl;
+            y++;
         }
     }
 };
@@ -45,7 +47,7 @@ int main()
 {
     Graph obj;
     
-    int V = 5;
+    int V = 7;
     vector<int> adj[V];
     obj.addEdge(adj, 0, 1);
     obj.addEdge(adj, 0, 4);
@@ -54,6 +56,11 @@ int main()
     obj.addEdge(adj, 1, 4);
     obj.addEdge(adj, 2, 3);
     obj.addEdge(adj, 3, 4);
+    obj.addEdge(adj, 5, 6);
+    obj.addEdge(adj, 5, 1);
     obj.printGraph(adj, V);
     return 0;
 }
+
+
+
