@@ -166,7 +166,128 @@ int main() {
 
     return 0;
 }
+////////////////////////////////////////////////////
+#include "bits/stdc++.h"
+using namespace std;
 
+class Graph{
+    public:
+    
+    map<int, vector<pair<int, int> > > mp;
+
+    void addEdge(int u, int v, int dist) {
+        mp[u].push_back(make_pair(v, dist));
+        //cout << u << v << dist << "\n";
+    }
+    
+    void printGraph(int V)
+    {
+        //int street;
+        int n = 1;
+        int y = 0;
+        //int unknown = rand()
+        for (int v = 1; v < V; v++) {
+            //RandomStreet(n);
+            string streets[19] = {"adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
+                            "Henry", "Jefferson", "Lebanon", "Mitchell", "North", 
+                            "Oregon", "Park", "Rough", "Street", "Times",
+                            "Walnut", "Yam"};
+      
+            string street = "";
+            for (int i = 0; i < n; i++){
+                street = street + streets[y];
+                cout << "\n Streets adjacent to " << street << "(" << v << ")"
+                    << "\n";
+                if (v == 1){
+                   cout << "    " << streets[1] << "(" << 2 << ") -> " << streets[6] << "(" << 7 << ")"; 
+                }
+                if (v == 2){
+                   cout << "    " << streets[0] << "(" << 1 << ") -> " << streets[2] << "(" << 3 << ")"; 
+                }
+                if (v == 3){
+                   cout << "    " << streets[1] << "(" << 2 << ") -> " << streets[3] << "(" << 4 << ")"; 
+                }
+                if (v == 4){
+                   cout << "    " << streets[2] << "(" << 3 << ") -> " << streets[4] << "(" << 5 << ")"; 
+                }
+                if (v == 5){
+                   cout << "    " << streets[3] << "(" << 4 << ") -> " << streets[5] << "(" << 6 << ")"; 
+                }
+                if (v == 6){
+                   cout << "    " << streets[4] << "(" << 5 << ") -> " << streets[6] << "(" << 7 << ")"; 
+                }
+                if (v == 7){
+                   cout << "    " << streets[5] << "(" << 6 << ") -> " << streets[2] << "(" << 3 << ")"; 
+                }
+                    
+            y++;
+            }
+        }
+    }
+    
+    void startDijkstra(int u){
+        vector<int> dist(1e2 + 1, 1e9);
+    
+        set<pair<int, int> > st;
+        st.insert(make_pair(0, u));
+        dist[u] = 0;
+    
+        while (!st.empty()) {
+            pair<int, int> now = *st.begin();
+            st.erase(st.begin());
+    
+            int v1 = now.second;
+            int w = now.first;
+    
+            const vector<pair<int, int> > &edges = mp[v1];
+            for (const pair<int, int> &to : edges) {
+                if (w + to.second < dist[to.first]) {
+                    st.erase(make_pair(dist[to.first], to.first));
+                    dist[to.first] = w + to.second;
+                    st.insert(make_pair(dist[to.first], to.first));
+                }
+            }
+        }
+    
+        for (int i = 1; i <= 7; i++) {
+            cout << i << ' ' << dist[i] << endl;
+        }
+    }
+};
+
+int main() {
+    Graph obj;
+    
+    int V = 8;
+    vector<int> adj[V];
+    
+    obj.addEdge(1, 2, 1);
+    obj.addEdge(1, 7, 1);
+
+    obj.addEdge(2, 1, 1);
+    obj.addEdge(2, 3, 1);
+
+    obj.addEdge(3, 2, 1);
+    obj.addEdge(3, 4, 1);
+
+    obj.addEdge(4, 3, 1);
+    obj.addEdge(4, 5, 1);
+
+    obj.addEdge(5, 4, 1);
+    obj.addEdge(5, 6, 1);
+
+    obj.addEdge(6, 5, 1);
+    obj.addEdge(6, 7, 1);
+
+    obj.addEdge(7, 6, 1);
+    obj.addEdge(7, 3, 1);
+
+    obj.printGraph(V);
+    cout << "\n\nThe distance from street 1 to each other street: " << "\n";
+    obj.startDijkstra(1);
+
+    return 0;
+}
 
 
 
