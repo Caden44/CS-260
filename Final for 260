@@ -1,25 +1,164 @@
-#include <bits/stdc++.h>
+#include "bits/stdc++.h"
 using namespace std;
 
-string RandomStreet(int n)
-{
-    string streets[19] = { "adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
-                          "Henry", "Jefferson", "Lebanon", "Mitchell", "North", 
-                          "Oregon", "Park", "Rough", "Street", "Times",
-                          "Walnut", "Youth"};
-  
-    string street = "";
-    for (int i = 0; i < n; i++) 
-        street = street + streets[rand() % 19];
-    cout << "\n";
-    streets.erase();
-    return street;
-}
-  
-int main()
-{
-   srand(time(NULL));
-   int n = 1;
-   cout << RandomStreet(n);
-   cout << RandomStreet(n);
+int foundhigh = 0;
+
+class Graph{
+    public:
+    
+    map<int, vector<pair<int, int> > > mp;
+
+    void addEdge(int u, int v, int dist) {
+        mp[u].push_back(make_pair(v, dist));
+    }
+    
+    void printGraph(int V)
+    {
+        int n = 1;
+        int y = 0;
+        for (int v = 1; v < V; v++) {
+            string streets[19] = {"adams", "Bucchanan", "Cherry", "Dawn", "East", "Franklin", "Grant",
+                            "Henry", "Jefferson", "Lebanon", "Mitchell", "North", 
+                            "Oregon", "Park", "Rough", "Street", "Times",
+                            "Walnut", "Yam"};
+      
+            string street = "";
+            for (int i = 0; i < n; i++){
+                street = street + streets[y];
+                cout << "\n Streets adjacent to " << street << "(" << v << ")"
+                    << "\n";
+                if (v == 1){
+                   cout << "    " << streets[1] << "(" << 2 << ") -> " << streets[6] << "(" << 7 << ")"; 
+                }
+                if (v == 2){
+                   cout << "    " << streets[0] << "(" << 1 << ") -> " << streets[2] << "(" << 3 << ")"; 
+                }
+                if (v == 3){
+                   cout << "    " << streets[1] << "(" << 2 << ") -> " << streets[3] << "(" << 4 << ")"; 
+                }
+                if (v == 4){
+                   cout << "    " << streets[2] << "(" << 3 << ") -> " << streets[4] << "(" << 5 << ")"; 
+                }
+                if (v == 5){
+                   cout << "    " << streets[3] << "(" << 4 << ") -> " << streets[5] << "(" << 6 << ")"; 
+                }
+                if (v == 6){
+                   cout << "    " << streets[4] << "(" << 5 << ") -> " << streets[6] << "(" << 7 << ")"; 
+                }
+                if (v == 7){
+                   cout << "    " << streets[5] << "(" << 6 << ") -> " << streets[2] << "(" << 3 << ")"; 
+                }
+                    
+            y++;
+            }
+        }
+    }
+    
+    void Dijkstra(int u){
+        int maxdist = 0;
+        cout << "\n\n" << "SPA for street " << u << "\n";
+        vector<int> dist(1e2 + 1, 1e9);
+    
+        set<pair<int, int> > st;
+        st.insert(make_pair(0, u));
+        dist[u] = 0;
+    
+        while (!st.empty()) {
+            pair<int, int> now = *st.begin();
+            st.erase(st.begin());
+    
+            int v1 = now.second;
+            int w = now.first;
+    
+            const vector<pair<int, int> > &edges = mp[v1];
+            for (const pair<int, int> &to : edges) {
+                if (w + to.second < dist[to.first]) {
+                    st.erase(make_pair(dist[to.first], to.first));
+                    dist[to.first] = w + to.second;
+                    st.insert(make_pair(dist[to.first], to.first));
+                }
+            }
+        }
+    
+        for (int i = 1; i <= 7; i++) {
+            if (dist[i] > maxdist){
+                maxdist = dist[i];
+                cout << i << ' ' << dist[i] << endl;
+            }
+            else {
+            cout << i << ' ' << dist[i] << endl;
+            }
+        }
+        if (maxdist == 6||maxdist == 1){
+           foundhigh = 6;
+        }
+        else if (maxdist == 5){
+           foundhigh = 7;
+        }
+        else if (maxdist == 4){
+           foundhigh = 8;
+        }
+        else if (maxdist == 3){
+           foundhigh = 9;
+        }
+        else if (maxdist == 2){
+           foundhigh = 10;
+        }
+        else {
+            //test 3.4.2 to catch any anomalies in the dist[] variable
+            cout << "ERROR" << "\n";
+        }
+    }
+};
+
+int main() {
+    Graph obj;
+    
+    int V = 8;
+    vector<int> adj[V];
+    
+    obj.addEdge(1, 2, 1);
+    obj.addEdge(1, 7, 1);
+    obj.addEdge(1, 5, 1);
+
+    obj.addEdge(2, 1, 1);
+    obj.addEdge(2, 3, 1);
+
+    obj.addEdge(3, 6, 1);
+    obj.addEdge(3, 4, 1);
+    obj.addEdge(3, 7, 1);
+
+    obj.addEdge(4, 3, 1);
+    obj.addEdge(4, 5, 1);
+
+    obj.addEdge(5, 3, 1);
+    obj.addEdge(5, 1, 1);
+
+    obj.addEdge(6, 4, 1);
+    obj.addEdge(6, 2, 1);
+
+    obj.addEdge(7, 6, 1);
+    obj.addEdge(7, 3, 1);
+    //test 3.1.1 to see if double linking nodes has an effect
+    //obj.addEdge(7, 3, 1);
+    //test 3.1.2 to see if exceeding the V count has an effect
+    //obj.addEdge(10, 4, 1);
+    //test 3.3.2 
+    //obj.addEdge(3, 11, 1);
+
+    obj.printGraph(V);
+    obj.Dijkstra(1);
+    obj.Dijkstra(2);
+    obj.Dijkstra(3);
+    obj.Dijkstra(4);
+    obj.Dijkstra(5);
+    obj.Dijkstra(6);
+    obj.Dijkstra(7);
+    //test 3.3.1 to see how one way connected nodes effect the algorithm (Use test 3.1.2 in conjunction)
+    //obj.Dijkstra(10);
+    //test 3.4.1 to see if unconnected nodes can pass through the algorithm, and what the result is
+    //obj.Dijkstra(11);
+    cout << "The cost to travel to every node is " << foundhigh;
+
+    return 0;
 }
